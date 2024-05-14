@@ -1,10 +1,10 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 
-import { BASE_URL } from './const.js';
+import { BASE_URL } from '../lib/config.js';
 
-import login from './lib/auth.js';
-import debug from './lib/debug.js';
+import login from '../lib/auth.js';
+import debug from '../lib/debug.js';
 
 // K6 configuration options for different stages of the test
 export let options = {
