@@ -6,5 +6,5 @@
 3. Run the test with:
 
 ```sh
-k6 run -e ADMIN_EMAIL="" ADMIN_PASSWORD="" BASE_URL="" tests/1-load-test.js
+k6 run -e ADMIN_EMAIL="" ADMIN_PASSWORD="" BASE_URL="" COMPANY_ID=1 tests/1-load-test.js
 ```

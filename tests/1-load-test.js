@@ -1,7 +1,7 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 
-import { BASE_URL } from '../lib/config.js';
+import { BASE_URL, COMPANY_ID } from '../lib/config.js';
 
 import login from '../lib/auth.js';
 import debug from '../lib/debug.js';
@@ -14,6 +14,14 @@ export let options = {
       { duration: '1m', target: 0 },  // Ramp down to 0 users over 1 minute
   ],
 };
+
+function switchCompany(headers) {
+  const switchCompanyRes = http.get(`${BASE_URL}/companies/${COMPANY_ID}/switch`, { headers });
+  debug('Company Switching to: ' + COMPANY_ID);
+  check(switchCompanyRes, {
+    'Company swith status was 200': (res) => res.status === 200,
+  });
+}
 
 // Test the /dashboards endpoint
 function getDashboard(headers) {
@@ -39,6 +47,7 @@ export default function () {
   // Define the headers with the authentication cookie
   const headers = { 'Cookie': cookieString };
 
+  switchCompany(headers);
   getDashboard(headers);
   getPurchaseOrders(headers);
   
